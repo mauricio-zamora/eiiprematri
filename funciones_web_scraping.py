@@ -4,8 +4,11 @@ from config import *
 from student_parser import StudentParser
 from main_listing_parser import MainListingParser
 from funciones_io import escribir_historial, escribir_informacion_estudiante
+from custom_http_adapter import CustomHttpAdapter, get_legacy_session
 import re
 from termcolor import cprint
+import urllib3
+import ssl
 
 
 def procesar_expediente_estudiante(texto):
@@ -15,14 +18,15 @@ def procesar_expediente_estudiante(texto):
 
 
 def descargar_expediente_estudiante(carne, nombre, clave, sess):
-    r = sess.get(url_notas.format(clave), verify=False)
+    r = sess.get(url_notas.format(clave))
     return r.text
 
 
 def iniciar_proceso_descarga() -> bool:
     se_puedo_descargar = False
-    s = requests.Session()
-    s.post(url_login, data=data)
+    # s = requests.Session()
+    # s.post(url_login, data=data)
+    s = get_legacy_session(data, url_login)
     r = s.get(url_listado, verify=False)
     contenido = r.text
     match = re.findall(r'Listado de estudiantes asignados al profesor', contenido)

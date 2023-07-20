@@ -19,6 +19,7 @@ from funciones_expediente import escribir_encabezado_expediente, escribir_expedi
 from funciones_web_scraping import iniciar_proceso_descarga
 from funciones_procesamiento_expediente import procesar_archivos_expedientes
 from funciones_consola import clear, leer_rango_numeros_enteros
+from custom_http_adapter import CustomHttpAdapter, get_legacy_session
 
 
 def imprimir_finalizado() -> None:
