@@ -1,4 +1,5 @@
 import requests
+
 from config import *
 from student_parser import StudentParser
 from main_listing_parser import MainListingParser
@@ -14,7 +15,7 @@ def procesar_expediente_estudiante(texto):
 
 
 def descargar_expediente_estudiante(carne, nombre, clave, sess):
-    r = sess.get(url_notas.format(clave))
+    r = sess.get(url_notas.format(clave), verify=False)
     return r.text
 
 
@@ -22,7 +23,7 @@ def iniciar_proceso_descarga() -> bool:
     se_puedo_descargar = False
     s = requests.Session()
     s.post(url_login, data=data)
-    r = s.get(url_listado)
+    r = s.get(url_listado, verify=False)
     contenido = r.text
     match = re.findall(r'Listado de estudiantes asignados al profesor', contenido)
 
